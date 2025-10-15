@@ -1,0 +1,41 @@
+@model NicheHospital.Models.Appointment
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    ViewData["Title"] = "Agendar Cita";
+}
+
+<h2>Agendar Nueva Cita</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label class="form-label">Paciente</label>
+        <select asp-for="PatientId" class="form-select" asp-items="ViewBag.Patients">
+            <option value="">-- Selecciona un paciente --</option>
+        </select>
+        <span asp-validation-for="PatientId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Médico</label>
+        <select asp-for="DoctorId" class="form-select" asp-items="ViewBag.Doctors">
+            <option value="">-- Selecciona un médico --</option>
+        </select>
+        <span asp-validation-for="DoctorId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Date" class="form-label">Fecha y hora</label>
+        <input asp-for="Date" type="datetime-local" class="form-control" />
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

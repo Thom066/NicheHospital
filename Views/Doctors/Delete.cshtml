@@ -1,0 +1,20 @@
+@model NicheHospital.Models.Doctor
+@{
+    ViewData["Title"] = "Eliminar Médico";
+}
+
+<h2>Eliminar Médico</h2>
+
+<h4>¿Seguro que deseas eliminar este registro?</h4>
+
+<div class="card p-3 mt-3">
+    <p><strong>Nombre:</strong> @Model.Name</p>
+    <p><strong>Documento:</strong> @Model.Document</p>
+    <p><strong>Especialidad:</strong> @Model.Specialty</p>
+</div>
+
+<form asp-action="Delete" method="post" class="mt-3">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

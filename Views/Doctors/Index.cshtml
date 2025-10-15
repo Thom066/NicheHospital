@@ -1,0 +1,85 @@
+@model IEnumerable<NicheHospital.Models.Doctor>
+@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    ViewData["Title"] = "Médicos";
+    var specialties = ViewBag.Specialties as List<string>;
+    string currentFilter = ViewData["CurrentFilter"] as string ?? "Todas";
+}
+
+<h2>Médicos</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<!-- 🔹 Filtro por especialidad -->
+<form asp-action="Index" method="get" class="row mb-3">
+    <div class="col-md-4">
+        @{
+            var selectedValue = currentFilter ?? "Todas";
+        }
+
+        <select name="specialty" class="form-select">
+            <option value="Todas" selected="@(selectedValue == "Todas")">-- Todas las especialidades --</option>
+
+            @if (specialties != null)
+            {
+                foreach (var s in specialties)
+                {
+                    var isSelected = (s == selectedValue) ? "selected" : null;
+                    <option value="@s" selected="@isSelected">@s</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+        <a asp-action="Index" class="btn btn-secondary">Mostrar todas</a>
+    </div>
+</form>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">+ Nuevo Médico</a>
+</p>
+
+<table class="table table-bordered table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Documento</th>
+            <th>Especialidad</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            foreach (var d in Model)
+            {
+                <tr>
+                    <td>@d.Name</td>
+                    <td>@d.Document</td>
+                    <td>@d.Specialty</td>
+                    <td>@d.Phone</td>
+                    <td>@d.Email</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@d.Id" class="btn btn-warning btn-sm">Editar</a>
+                        <a asp-action="Delete" asp-route-id="@d.Id" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center text-muted">
+                    No se encontraron médicos para la especialidad seleccionada.
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

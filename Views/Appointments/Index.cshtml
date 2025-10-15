@@ -1,0 +1,59 @@
+@model IEnumerable<NicheHospital.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Citas Médicas";
+}
+
+<h2>Citas Médicas</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-success">+ Nueva Cita</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Paciente</th>
+        <th>Médico</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Model.Any())
+    {
+        foreach (var a in Model)
+        {
+            <tr>
+                <td>@a.Patient.Name</td>
+                <td>@a.Doctor.Name</td>
+                <td>@a.Date.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@a.Status</td>
+                <td>
+                    @if (a.Status == "Pendiente")
+                    {
+                        <a asp-action="Attend" asp-route-id="@a.Id" class="btn btn-primary btn-sm">Atender</a>
+                        <a asp-action="Cancel" asp-route-id="@a.Id" class="btn btn-danger btn-sm">Cancelar</a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Sin acciones</span>
+                    }
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="5" class="text-center text-muted">No hay citas registradas.</td>
+        </tr>
+    }
+    </tbody>
+</table>
