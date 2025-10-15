@@ -46,5 +46,13 @@ dotnet run
 └── Migrations/         # Database migrations
 ```
 
-## License
-This project is under the MIT License.
+## Diagrams
+
+<img width="1536" height="1024" alt="diagrama" src="https://github.com/user-attachments/assets/077a10cb-f4a8-45a4-b9a7-e8fe44aa70a1" />
+
+<img width="1179" height="699" alt="usecase_diagram" src="https://github.com/user-attachments/assets/6210af8f-a50a-490c-a7d2-d13fb4808970" />
+
+
+
+
+
